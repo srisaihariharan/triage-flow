@@ -1,0 +1,2 @@
+import { NextResponse } from 'next/server'; import { intakePatients } from '@/lib/schema'; import { validateOrFlag } from '@/lib/validator'; import { scorePatient } from '@/lib/triage'
+export async function POST(request: Request) { const body = await request.json(); const patient = intakePatients.find((item) => item.id === body.id) ?? body; const flagged = validateOrFlag(patient); return NextResponse.json(flagged ?? { status: 'VALID', ...scorePatient(patient) }) }

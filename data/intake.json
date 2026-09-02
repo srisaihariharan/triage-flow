@@ -1,0 +1,14 @@
+[
+  {"id":"PT-1042","name":"Maya Chen","age":34,"gender":"Female","heartRate":88,"systolicBP":122,"diastolicBP":78,"oxygen":98,"temperature":36.8,"symptoms":["headache","nausea"]},
+  {"id":"PT-1043","name":"Robert Alvarez","age":76,"gender":"Male","heartRate":138,"systolicBP":84,"diastolicBP":52,"oxygen":87,"temperature":39.4,"symptoms":["shortness of breath","chest pain"]},
+  {"id":"PT-1044","name":"Aisha Williams","age":9,"gender":"Female","heartRate":126,"systolicBP":96,"diastolicBP":61,"oxygen":93,"temperature":38.7,"symptoms":["fever","cough"]},
+  {"id":"PT-1045","name":"Thomas Reed","age":58,"gender":"Male","heartRate":112,"systolicBP":108,"diastolicBP":70,"oxygen":91,"temperature":37.6,"symptoms":["dizziness","weakness"]},
+  {"id":"PT-1046","name":"Elena Rossi","age":82,"gender":"Female","heartRate":72,"systolicBP":130,"diastolicBP":82,"oxygen":96,"temperature":36.5,"symptoms":["fall","hip pain"]},
+  {"id":"PT-1047","name":"Marcus Johnson","age":47,"gender":"Male","heartRate":144,"systolicBP":118,"diastolicBP":76,"oxygen":95,"temperature":38.1,"symptoms":["palpitations","anxiety"]},
+  {"id":"PT-1048","name":"Priya Nair","age":69,"gender":"Female","heartRate":102,"systolicBP":88,"diastolicBP":58,"oxygen":92,"temperature":37.2,"symptoms":["abdominal pain","vomiting"]},
+  {"id":"PT-1049","name":"Samuel Brooks","age":23,"gender":"Male","heartRate":78,"systolicBP":124,"diastolicBP":80,"oxygen":99,"temperature":36.7,"symptoms":["laceration","hand pain"]},
+  {"id":"PT-1050","name":"Nora Ibrahim","age":71,"gender":"Female","heartRate":118,"systolicBP":94,"diastolicBP":62,"oxygen":89,"temperature":39.1,"symptoms":["confusion","fatigue"]},
+  {"id":"PT-1051","name":"Diego Santos","age":41,"gender":"Male","heartRate":null,"systolicBP":116,"diastolicBP":74,"oxygen":97,"temperature":36.9,"symptoms":["back pain"]},
+  {"id":"PT-1052","name":"Grace Park","age":65,"gender":"Female","heartRate":91,"systolicBP":136,"diastolicBP":86,"oxygen":94,"temperature":37.0,"symptoms":["migraine","light sensitivity"]},
+  {"id":"PT-1053","name":"Arthur King","age":88,"gender":"Male","heartRate":132,"systolicBP":86,"diastolicBP":54,"oxygen":88,"temperature":38.9,"symptoms":["respiratory distress","bluish lips"]}
+]

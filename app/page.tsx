@@ -1,47 +1,6 @@
-export default function Page() {
-  return (
-    <main
-      style={{
-        colorScheme: 'light dark',
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'light-dark(#fff, #000)',
-        color: 'light-dark(#000, #fff)',
-      }}
-    >
-      <svg
-        aria-hidden="true"
-        style={{ width: 80, height: 80 }}
-        width={80}
-        height={80}
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 56px)',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 500,
-          color: 'light-dark(#71717a, #a1a1aa)',
-        }}
-      >
-        Your v0 generation will show here.
-      </p>
-    </main>
-  )
-}
+'use client'
+import { useMemo, useState } from 'react'; import { Activity, ArrowUpRight, BedDouble, CheckCircle2, CircleAlert, ClipboardCheck, HeartPulse, RefreshCw, ShieldCheck, Siren, Stethoscope } from 'lucide-react'; import { getCases } from '@/lib/schema';
+const cases = getCases();
+const severityStyle: Record<string,string> = { Low:'badge-low', Moderate:'badge-moderate', High:'badge-high', Critical:'badge-critical' };
+export default function Page() { const [ran, setRan] = useState(false); const flagged = cases.filter(c=>c.triage.status==='FLAGGED').length; const critical = cases.filter(c=>c.triage.severity==='Critical').length; const beds = { ICU:2, Emergency:5, General:14, Observation:8 }; const used = cases.filter(c=>c.placement.bedAssigned).reduce((a,c)=>({...a,[c.placement.ward]:(a[c.placement.ward]||0)+1}), {} as Record<string,number>); const tests = useMemo(()=>[{name:'Queue integrity',detail:'Queue count equals intake dataset length',pass:cases.length===12},{name:'Severity ordering',detail:'Highest score exceeds lowest score',pass:Math.max(...cases.map(c=>c.triage.score||0))>Math.min(...cases.map(c=>c.triage.score||0))},{name:'Null vital safety',detail:'Incomplete vitals return FLAGGED',pass:cases.filter(c=>c.vitals.heartRate===null).every(c=>c.triage.status==='FLAGGED')}],[]); return <main className="min-h-screen bg-background"><header className="topbar"><div className="brand"><div className="brand-mark"><HeartPulse /></div><div><p className="brand-name">PulseBridge</p><p className="brand-sub">TRIAGE INTEGRATION / v0.1</p></div></div><div className="header-meta"><span className="live-dot" /> Pipeline operational <span className="divider" /> <span className="mono">SEP 02, 2026</span></div></header><div className="shell"><section className="hero"><div><p className="eyebrow"><Activity /> Clinical data pipeline</p><h1>Command center for<br/><span>patient intake.</span></h1><p className="hero-copy">Validate, score, and allocate incoming patient records through one deterministic integration layer.</p></div><button className="refresh" onClick={()=>setRan(true)}><RefreshCw /> {ran?'Pipeline refreshed':'Run pipeline'}<ArrowUpRight /></button></section><section className="stats-grid"><Stat icon={<ClipboardCheck />} label="Total patients" value={cases.length} note="In current queue"/><Stat icon={<Siren />} label="Critical cases" value={critical} note="Immediate attention" tone="critical"/><Stat icon={<BedDouble />} label="Beds available" value={Object.entries(beds).reduce((a,[ward,count])=>a+count-(used[ward]||0),0)} note="Across all wards" tone="accent"/><Stat icon={<CircleAlert />} label="Flagged records" value={flagged} note="Incomplete vitals" tone="warning"/></section><div className="content-grid"><section className="panel cases-panel"><div className="panel-head"><div><p className="eyebrow">Normalized output</p><h2>Patient cases</h2></div><span className="count-pill">{cases.length} records</span></div><div className="table-wrap"><table><thead><tr><th>Patient</th><th>Age</th><th>O₂</th><th>Severity</th><th>Ward</th><th>Status</th></tr></thead><tbody>{cases.map(c=><tr key={c.id}><td><div className="patient"><span className="avatar">{c.patient.name.split(' ').map(n=>n[0]).join('')}</span><div><strong>{c.patient.name}</strong><small>{c.id}</small></div></div></td><td>{c.patient.age}</td><td className={c.vitals.oxygen!==null&&c.vitals.oxygen<90?'danger-text':''}>{c.vitals.oxygen===null?'—':`${c.vitals.oxygen}%`}</td><td>{c.triage.severity?<span className={`badge ${severityStyle[c.triage.severity]}`}>{c.triage.severity}</span>:<span className="badge badge-flag">Flagged</span>}</td><td><span className="ward">{c.placement.ward}</span></td><td><span className={`status ${c.triage.status==='VALID'?'status-valid':'status-flag'}`}><span/>{c.triage.status}</span></td></tr>)}</tbody></table></div></section><aside className="side-stack"><section className="panel occupancy"><div className="panel-head"><div><p className="eyebrow">Resource monitor</p><h2>Ward occupancy</h2></div><ShieldCheck className="panel-icon"/></div><div className="ward-list">{Object.entries(beds).map(([ward,total])=>{const count=used[ward]||0; const percent=Math.round(count/total*100); return <div className="ward-row" key={ward}><div className="ward-label"><span>{ward}</span><span className="mono">{count}/{total}</span></div><div className="progress"><span style={{width:`${percent}%`}}/></div><small>{total-count} beds available</small></div>})}</div></section><section className="panel tests"><div className="panel-head"><div><p className="eyebrow">Verification suite</p><h2>Pipeline tests</h2></div><Stethoscope className="panel-icon"/></div><div className="test-list">{tests.map(test=><div className="test" key={test.name}><div className="test-icon"><CheckCircle2 /></div><div><strong>{test.name}</strong><small>{test.detail}</small></div><span className="pass">{test.pass?'PASS':'FAIL'}</span></div>)}</div><button className="run-tests" onClick={()=>setRan(true)}>Run verification tests <ArrowUpRight /></button></section></aside></div></div></main> }
+function Stat({icon,label,value,note,tone=''}:{icon:React.ReactNode;label:string;value:number;note:string;tone?:string}){return <div className={`stat-card ${tone}`}><div className="stat-top"><span className="stat-icon">{icon}</span><span className="stat-label">{label}</span></div><div className="stat-value">{value}</div><p>{note}</p></div>}

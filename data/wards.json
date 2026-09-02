@@ -1,0 +1,6 @@
+[
+  {"ward":"ICU","beds":2,"staff":4,"capacity":8},
+  {"ward":"Emergency","beds":5,"staff":12,"capacity":18},
+  {"ward":"General","beds":14,"staff":18,"capacity":32},
+  {"ward":"Observation","beds":8,"staff":8,"capacity":12}
+]

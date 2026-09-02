@@ -1,0 +1,6 @@
+[
+  {"id":"ST-01","name":"Dr. Lena Ortiz","role":"Emergency Physician","ward":"Emergency","status":"On duty"},
+  {"id":"ST-02","name":"Dr. Aaron Bell","role":"Intensivist","ward":"ICU","status":"On duty"},
+  {"id":"ST-03","name":"Nurse Kayla Singh","role":"Charge Nurse","ward":"General","status":"On duty"},
+  {"id":"ST-04","name":"Nurse Owen Price","role":"Triage Nurse","ward":"Observation","status":"On duty"}
+]

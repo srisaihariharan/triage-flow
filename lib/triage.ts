@@ -1,0 +1,2 @@
+import type { IntakePatient, Severity } from '@/types'
+export function scorePatient(patient: IntakePatient) { let score = 0; if (patient.oxygen !== null && patient.oxygen < 90) score += 5; if (patient.systolicBP !== null && patient.systolicBP < 90) score += 4; if (patient.heartRate !== null && patient.heartRate > 130) score += 3; if (patient.temperature !== null && patient.temperature > 39) score += 2; if (patient.age > 70) score += 1; const severity: Severity = score <= 2 ? 'Low' : score <= 5 ? 'Moderate' : score <= 8 ? 'High' : 'Critical'; return { score, severity } }
