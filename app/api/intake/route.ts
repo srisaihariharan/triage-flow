@@ -1,2 +1,3 @@
-import { NextResponse } from 'next/server'; import { intakePatients } from '@/lib/schema'
-export async function GET() { return NextResponse.json(intakePatients) }
+import { NextResponse } from 'next/server'
+import { IntakeService } from '@/src/services'
+export async function GET(){return NextResponse.json(await new IntakeService().getQueue())}

@@ -1,2 +1,3 @@
-import { NextResponse } from 'next/server'; import { getCases } from '@/lib/schema'
-export async function GET() { return NextResponse.json(getCases()) }
+import { NextResponse } from 'next/server'
+import { TriageIntegrationService } from '@/src/services'
+export async function GET(){return NextResponse.json((await new TriageIntegrationService().processQueue()).cases)}
